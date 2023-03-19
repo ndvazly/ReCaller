@@ -1,5 +1,4 @@
 from enum import Enum
-from dataclasses import dataclass
 
 
 class Globals:
@@ -12,21 +11,29 @@ class Globals:
 
         # """ UI Fonts"
         self.HeaderFont = ('Arial', 16)
+        self.PatchFont = ('Arial', 10)
 
         # """ Paths & Data """
         self.ImgPath = 'imgs/'
+
+
+class Socket(Enum):
+    Input = 0
+    Output = 1
 
 
 class Categories(Enum):
     EQ = 1
     Compressor = 2
     Effect = 3
+    Interface = 4
 
 
 class Types(Enum):
     Mono = 1
     Stereo = 2
     Dual_Mono = 3
+    Multi = 4
 
 
 class Colors(Enum):
@@ -34,15 +41,9 @@ class Colors(Enum):
     Green   = [0, 255, 0]
     Blue    = [0, 0, 255]
 
-
-@dataclass
-class Point:
-    patch_id: int
-    point: int
-
-
-@dataclass
-class Connection:
-    name: str
-    in_point: Point
-    out_point: Point
+# @dataclass
+# class Connection:
+#     name: str
+#     in_point: Point
+#     out_point: Point
+#

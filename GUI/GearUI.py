@@ -13,10 +13,16 @@ class GearUI(Frame):
         self.parent = parent
         self.gear_item: GearItem.GearItem = gear_item
         self.configure(height=80, borderwidth=2, border=1,  highlightthickness=1, highlightbackground=self.fg)
+        self.bind('<Double-Button-1>', lambda e: self.parent.edit_gear(self.gear_item))
         # self.grid_columnconfigure(0, weight=1)
         # self.grid_rowconfigure(0, weight=1)
-        self.img = tk.PhotoImage(file=self.gear_item.img_file)
 
         tk.Label(self, text=self.gear_item.name, bg=self.bg, foreground=self.fg).pack(anchor=tk.CENTER, expand=False)
         # tk.Label(self, image=self.img, borderwidth=0).pack(column=0,sticky="e")
-        tk.Label(self, image=self.img, borderwidth=0).pack(anchor=tk.CENTER, expand=False)
+        if self.gear_item.img_file is not None:
+            self.img = tk.PhotoImage(file=self.gear_item.img_file)
+            tk.Label(self, image=self.img, borderwidth=0).pack(anchor=tk.CENTER, expand=False)
+
+    # def dbl_click(self, event):
+    #     self.parent.edit_gear(self.gear_item)
+    #     print('dbl')

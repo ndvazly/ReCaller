@@ -1,4 +1,5 @@
 import tkinter as tk
+import customtkinter as ctk
 from tkinter import Frame
 from AppGlobals import Globals
 
@@ -10,9 +11,12 @@ class TopToolbar(Frame):
         self['bg'] = Globals().ToolbarBG
 
         # Add new channel strip button
-        tk.Button(self, text='+', font=Globals().HeaderFont, bg=Globals().ButtonBG).grid(row=0,
-                                                                                         column=self.grid_size()[0])
-        tk.Button(self, text='p', font=Globals().HeaderFont, bg=Globals().ButtonBG,
+        ctk.CTkButton(self, text='+').grid(row=0, column=self.grid_size()[0])
+        ctk.CTkButton(self, text='p', font=Globals().HeaderFont, fg_color=Globals().ButtonBG,
                   command=self.parent.open_patchbays_window).grid(row=0, column=self.grid_size()[0])
+        # ctk.CTkButton(self, text='+', font=Globals().HeaderFont, background=Globals().ButtonBG).grid(row=0,
+        #                                                                                  column=self.grid_size()[0])
+        # ctk.CTkButton(self, text='p', font=Globals().HeaderFont, background=Globals().ButtonBG,
+        #           command=self.parent.open_patchbays_window).grid(row=0, column=self.grid_size()[0])
 
         self.pack(fill=tk.X, anchor=tk.N)
