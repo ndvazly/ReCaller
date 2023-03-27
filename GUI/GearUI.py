@@ -9,7 +9,7 @@ class GearUI(Frame):
     def __init__(self, parent, gear_item):
         self.bg = AppGlobals.Globals().DarkBG
         self.fg = AppGlobals.Globals().TextColor
-        Frame.__init__(self, parent, bg=self.bg)
+        Frame.__init__(self, parent.content_frame, bg=self.bg)
         self.parent = parent
         self.gear_item: GearItem.GearItem = gear_item
         self.configure(height=80, borderwidth=2, border=1,  highlightthickness=1, highlightbackground=self.fg)

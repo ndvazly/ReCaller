@@ -19,20 +19,17 @@ class PatchBay:
         self.name: str = name
         self.number_of_points: int = number_of_points
         self.points: list[Point] = [None] * self.number_of_points
-        self.devices: list[GearItem] = [None] * self.number_of_points
+        # self.devices: list[GearItem] = [None] * self.number_of_points
         # print(self.points)
 
     def connect_gear(self, p: Point, device):
         point_index = p.point
-        self.devices[point_index] = device
+        p.gear = device
         self.points[point_index] = p
 
     def get_point_name(self, point):
-        if self.devices[point] is not None:
-            words = self.devices[point].name.split()
-            shortname = str.join('\n', words)
-            shortname += '\nIn' if self.points[point].type == Socket.Input else '\nOut'
-            return shortname
+        if self.points[point] is not None:
+            return self.points[point].get_short_name()
         return f'-{point+1}-'
 
     def print_points(self):

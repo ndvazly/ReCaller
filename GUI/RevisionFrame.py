@@ -1,13 +1,18 @@
 from AppGlobals import Globals
-from tkinter import Frame
+from customtkinter import CTkScrollableFrame
 import tkinter as tk
+from GUI.StripUI import StripUI
 
 
-class RevisionFrame(Frame):
-    def __init__(self, parent):
-        Frame.__init__(self, parent)
+class RevisionFrame(CTkScrollableFrame):
+    def __init__(self, parent, revision):
+        CTkScrollableFrame.__init__(self, parent)
         self.parent = parent
-        self['bg'] = Globals().DarkBG
+        self.revision = revision
 
-        tk.Label(self, text='stripi').pack()
-        # self.pack(fill=tk.Y, anchor=tk.NE)
+        self.make_strips()
+        # self.pack(fill=tk.X)
+
+    def make_strips(self):
+        for s in self.revision.strips:
+            StripUI(self, s)

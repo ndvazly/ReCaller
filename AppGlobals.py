@@ -7,10 +7,12 @@ class Globals:
         self.DarkBG = '#071e26'
         self.ToolbarBG = '#0f3c4c'
         self.ButtonBG = '#92cbdf'
+        self.PatchBG = '#AAB'
         self.TextColor = '#d4f1f8'
 
         # """ UI Fonts"
-        self.HeaderFont = ('Arial', 16)
+        self.HeaderFont = ('Arial', 18)
+        self.NumberHeaderFont = ('Arial', 36)
         self.PatchFont = ('Arial', 10)
 
         # """ Paths & Data """
@@ -29,7 +31,7 @@ class Categories(Enum):
     Interface = 4
 
 
-class Types(Enum):
+class WidthType(Enum):
     Mono = 1
     Stereo = 2
     Dual_Mono = 3
