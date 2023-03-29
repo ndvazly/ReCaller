@@ -21,6 +21,7 @@ class GearItem:
     points: list[Point]
     color: Colors
     img_file: str
+    settings: list
 
     def add_point(self, point: Point):
         self.points.append(point)
@@ -41,3 +42,7 @@ class GearItem:
                 stereo_list.append((io_list[i], io_list[i+1]))
             i += 2
         return stereo_list
+
+    @staticmethod
+    def get_settings_options_list():
+        return ['Text', 'On/Off', 'List']

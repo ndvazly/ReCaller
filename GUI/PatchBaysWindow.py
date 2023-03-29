@@ -17,7 +17,7 @@ class PatchBaysWindow:
         self.mode = mode
         self.range_start = False
         self.socket_type: AppGlobals.Socket = AppGlobals.Socket.Input
-        self.socket_type_var = tk.IntVar(0)
+        self.socket_type_var = tk.IntVar()
         self.make_window()
 
     def set_callback(self, callback):

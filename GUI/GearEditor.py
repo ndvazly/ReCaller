@@ -18,10 +18,13 @@ class GearEditor(CTkScrollableFrame):
         self.gear: GearItem = None
         self.title_frame = None
         self.points_frame = None
+        self.settings_frame = None
         self.pady = 5
 
         self.name_var = tkinter.StringVar()
         self.point_names_stringvar = []
+        self.settings_widgets: list = []
+
         self.select_point_window: PatchBaysWindow = None
         self.add_range_start: Point = None
         self.add_range_end: Point = None
@@ -30,7 +33,7 @@ class GearEditor(CTkScrollableFrame):
     def make_title_frame(self):
         self.title_frame = ctk.CTkFrame(self)
         ctk.CTkButton(self.title_frame, text='x', width=20,
-                      command=self.parent.show_revisions_frame).grid(row=0, column=1, sticky='e')
+                      command=self.close).grid(row=0, column=1, sticky='e')
         ctk.CTkLabel(self.title_frame, text="Gear Editor", font=Globals().HeaderFont).grid(row=0, column=0)
         # ctk.CTkButton(self, text="Browse Image...", command=self.select_image).pack(pady=self.pady)
         self.title_frame.pack()
@@ -45,7 +48,7 @@ class GearEditor(CTkScrollableFrame):
         self.show_image()
         ctk.CTkButton(self.title_frame, text="Browse Image...", command=self.select_image).grid()
         self.make_points_frame()
-        # print(gear)
+        self.make_settings_frame()
 
     def show_image(self):
         if self.gear.img_file is not None:
@@ -76,11 +79,55 @@ class GearEditor(CTkScrollableFrame):
             r += 1
         self.points_frame.pack()
 
+    def make_settings_frame(self):
+        self.settings_frame = CTkFrame(self)
+        self.settings_widgets = []
+        ctk.CTkButton(self.settings_frame, text="+", command=self.add_new_setting, width=1).grid(row=0, column=0)
+        ctk.CTkLabel(self.settings_frame, text="Settings").grid(row=0, column=2, columnspan=4)
+        r = 1
+        self.settings_frame.pack(pady=40)
+        for s in self.gear.settings:
+            ctk.CTkButton(self.settings_frame, text='-', width=1,
+                          command=lambda x=s: self.delete_setting(s)).grid(row=r, column=0)
+            ctk.CTkLabel(self.settings_frame, text=f'{r}').grid(row=r, column=1, ipadx=10, sticky="w")
+            name_entry = ctk.CTkEntry(self.settings_frame)
+            name_entry.grid(row=r, column=2, ipadx=10, sticky="w")
+            name_entry.insert(0, s['name'])
+            value_combo = ctk.CTkComboBox(self.settings_frame,
+                                          values=self.gear.get_settings_options_list(),
+                                          state="readonly")
+            value_combo.set(s['value'])
+            value_combo.grid(row=r, column=3, ipadx=10)
+            init_entry = ctk.CTkEntry(self.settings_frame)
+            init_entry.grid(row=r, column=4, ipadx=10, sticky="w")
+            init_entry.insert(0, s['init'])
+            self.settings_widgets.append({'name': name_entry, 'value':value_combo, 'init': init_entry})
+            r += 1
+
+    def add_new_setting(self):
+        self.save_settings()
+        self.gear.settings.append({'name': '', 'value': self.gear.get_settings_options_list()[0], 'init': '0'})
+        self.refresh()
+
+    def delete_setting(self, s):
+        self.gear.settings.remove(s)
+        self.refresh()
+
+    def save_settings(self):
+        index = 0
+        for s in self.settings_widgets:
+            self.gear.settings[index]['name'] = s['name'].get()
+            self.gear.settings[index]['value'] = s['value'].get()
+            self.gear.settings[index]['init'] = s['init'].get()
+            index += 1
+
     def refresh(self):
         self.points_frame.destroy()
+        self.settings_frame.destroy()
         self.add_range_start = None
         self.add_range_end = None
         self.make_points_frame()
+        self.make_settings_frame()
 
     def select_image(self):
         filename = fd.askopenfilename()
@@ -131,3 +178,7 @@ class GearEditor(CTkScrollableFrame):
     def select_range(self):
         self.select_point_window = PatchBaysWindow(self, self.parent.studio.patchbays, mode='range')
         self.select_point_window.set_callback(self.add_range)
+
+    def close(self):
+        self.save_settings()
+        self.parent.show_revisions_frame()

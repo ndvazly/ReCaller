@@ -18,10 +18,10 @@ class StudioSetup:
         item = GearItem.GearItem('API 2500', Categories.Compressor, WidthType.Dual_Mono,
                                  [Point(0, 17, Socket.Input), Point(0, 18, Socket.Input),
                                   Point(0, 65, Socket.Output), Point(0, 66, Socket.Output)],
-                                 1, 'imgs/api_2500_small.png')
+                                 1, 'imgs/api_2500_small.png', [])
         self.rack.append(item)
 
-        lynx = GearItem.GearItem('Lynx', Categories.Interface, WidthType.Multi, [], 1, None)
+        lynx = GearItem.GearItem('Lynx', Categories.Interface, WidthType.Multi, [], 1, None, [])
         start_point = Point(0, 48, Socket.Input)
         end_point = Point(0, 63, Socket.Input)
         lynx.add_range(start_point, end_point)
