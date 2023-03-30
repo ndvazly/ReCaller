@@ -19,6 +19,10 @@ class StudioSetup:
                                  [Point(0, 17, Socket.Input), Point(0, 18, Socket.Input),
                                   Point(0, 65, Socket.Output), Point(0, 66, Socket.Output)],
                                  1, 'imgs/api_2500_small.png', [])
+        item.settings.append({'name': 'Threshold', 'value': 'Text', 'init': '0'})
+        item.settings.append({'name': 'Attack', 'value': 'List', 'init': '0.1,0.3,1,3,10,30'})
+        item.settings.append({'name': 'Ratio', 'value': 'List', 'init': '1.5,2,4,6,10,inf'})
+        item.settings.append({'name': 'Auto-Gain', 'value': 'On/Off', 'init': '1'})
         self.rack.append(item)
 
         lynx = GearItem.GearItem('Lynx', Categories.Interface, WidthType.Multi, [], 1, None, [])

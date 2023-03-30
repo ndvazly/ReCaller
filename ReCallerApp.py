@@ -2,6 +2,7 @@ import tkinter as tk
 from AppGlobals import *
 from GUI import TopToolbar, RackFrame, RevisionFrame, PatchBaysWindow
 from GUI.GearEditor import GearEditor
+from GUI.StripSettingsFrame import StripSettingsFrame
 from App import StudioSetup
 from App.Revision import Revision
 
@@ -42,9 +43,15 @@ class ReCaller:
             self.gearlist_frame = RackFrame.RackFrame(self, self.studio)
             self.gearlist_frame.grid(row=0, column=1, sticky="nesw")
 
+    def show_strip_settings_frame(self, strip):
+        self.current_frame.destroy()
+        strip_settings_frame = StripSettingsFrame(self, strip)
+        strip_settings_frame.grid(row=0, column=0, sticky="nesw")
+        self.current_frame = strip_settings_frame
+
     def show_revisions_frame(self):
         self.refresh()
-        self.revision_frame = RevisionFrame.RevisionFrame(self.main_frame, self.revisions[0])
+        self.revision_frame = RevisionFrame.RevisionFrame(self, self.revisions[0])
         self.revision_frame.grid(row=0, column=0, sticky="nesw")
         self.current_frame = self.revision_frame
 

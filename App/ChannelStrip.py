@@ -13,6 +13,7 @@ class ChannelStrip:
         self.input: list[Point] = []
         self.output: list[Point] = []
         self.inserts: list[GearItem] = [None] * 4
+        self.settings: list = [None] * 4
         self.color: AppGlobals.Colors = AppGlobals.Colors.Green
         self.select_io(Socket.Input, 0)
         self.select_io(Socket.Output, 0)
@@ -39,13 +40,13 @@ class ChannelStrip:
 
     def select_insert(self, index, name):
         self.inserts[index] = name
+        self.settings[index] = []
+        if name == '':
+            return
+        gear: GearItem = self.studio.get_gear_by_name(self.get_gear_name(name))
+        for s in gear.settings:
+            self.settings[index].append({'name': s['name'],'value': ''})
         self.get_chain()
-        # gear = self.studio.get_gear_by_name(name)
-        # self.inserts[index] = gear
-        # if gear is not None:
-        #     print(f'selected {gear.name} for insert {index}')
-        # else:
-        #     print(f'Selected nothing for insert {index}')
 
     def get_chain(self):
         chain: list[Point] = [self.output]
