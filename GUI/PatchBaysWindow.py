@@ -96,6 +96,7 @@ class PatchBaysWindow:
         # print('range_start ', self.range_start)
         p.type = self.socket_type
         print(p)
+        print(p.gear)
         if self.callback is not None:
             self.callback(p)
         if self.mode == 'add' or self.range_start:

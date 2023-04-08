@@ -48,11 +48,13 @@ class StripUI(CTkFrame):
                                                 values=self.outputs_list,
                                                 command=self.select_output)
         self.output_options.grid(row=1, column=1)
+        self.output_options.set(self.outputs_list[self.strip.output_index])
         ctk.CTkLabel(frame, text="In").grid(row=2, column=1)
         self.input_options = ctk.CTkOptionMenu(master=frame,
                                                values=self.inputs_list,
                                                command=self.select_input)
         self.input_options.grid(row=3, column=1)
+        self.input_options.set(self.inputs_list[self.strip.input_index])
 
     def make_inserts_frame(self, frame):
         frame.columnconfigure(2, weight=1)

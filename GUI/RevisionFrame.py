@@ -1,6 +1,7 @@
-from AppGlobals import Globals
+import customtkinter as ctk
 from customtkinter import CTkScrollableFrame
-import tkinter as tk
+
+import AppGlobals
 from GUI.StripUI import StripUI
 
 
@@ -10,8 +11,9 @@ class RevisionFrame(CTkScrollableFrame):
         self.parent = parent
         self.revision = revision
 
-        self.make_strips()
-        # self.pack(fill=tk.X)
+        if self.revision is not None:
+            ctk.CTkLabel(self, text=self.revision.name, font=AppGlobals.Globals().HeaderFont).pack()
+            self.make_strips()
 
     def make_strips(self):
         for s in self.revision.strips:

@@ -1,0 +1,20 @@
+News Mix A
+----------
+Bass: (Lynx  Out 1 -> Lynx  In 1)
+	LA-2A <L>
+	Gain: 3, Peak Reduction: 5, Limit: On, Link: Off
+
+Drums: (Lynx  Out 5-6 -> Lynx  In 5-6)
+	API 2500
+	Threshold: 0, Attack: 0.3, Ratio: 1.5, Release: 1, Knee: Hard, Thrust: Norm, Type: New, Link: IND, LinkShape: HP, AutoGain: On, Var Release: 0, Gain: 0
+
+News Mix B
+----------
+Bass: (Lynx  Out 1 -> Lynx  In 1)
+	LA-2A <L>
+	Gain: 4, Peak Reduction: 6, Limit: On, Link: Off
+
+Drums: (Lynx  Out 5-6 -> Lynx  In 5-6)
+	API 2500
+	Threshold: 0, Attack: 0.3, Ratio: 1.5, Release: 1, Knee: Hard, Thrust: Norm, Type: Old, Link: 50%, LinkShape: HP, AutoGain: Off, Var Release: 0, Gain: 0
+

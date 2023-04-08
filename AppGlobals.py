@@ -29,6 +29,7 @@ class Categories(Enum):
     Compressor = 2
     Effect = 3
     Interface = 4
+    Preamp = 5
 
 
 class WidthType(Enum):
@@ -42,10 +43,3 @@ class Colors(Enum):
     Red     = [255, 0, 0]
     Green   = [0, 255, 0]
     Blue    = [0, 0, 255]
-
-# @dataclass
-# class Connection:
-#     name: str
-#     in_point: Point
-#     out_point: Point
-#

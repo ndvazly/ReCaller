@@ -3,6 +3,8 @@ from tkinter import filedialog as fd
 import customtkinter as ctk
 from customtkinter import CTkFrame
 from customtkinter import CTkScrollableFrame
+
+import AppGlobals
 from App.Point import Point
 
 # import AppGlobals
@@ -19,9 +21,13 @@ class GearEditor(CTkScrollableFrame):
         self.title_frame = None
         self.points_frame = None
         self.settings_frame = None
+        self.gear_type_frame = None
+        self.gear_width_frame = None
         self.pady = 5
 
         self.name_var = tkinter.StringVar()
+        self.gear_type_var = tkinter.IntVar()
+        self.gear_width_var = tkinter.IntVar()
         self.point_names_stringvar = []
         self.settings_widgets: list = []
 
@@ -47,14 +53,45 @@ class GearEditor(CTkScrollableFrame):
 
         self.show_image()
         ctk.CTkButton(self.title_frame, text="Browse Image...", command=self.select_image).grid()
-        self.make_points_frame()
+        self.make_gear_width_frame()
+        self.make_gear_type_frame()
         self.make_settings_frame()
+        self.make_points_frame()
+        # print(gear.points)
 
     def show_image(self):
         if self.gear.img_file is not None:
             img = tkinter.PhotoImage(file=self.gear.img_file)
             ctk.CTkLabel(self.title_frame, image=img, text='').grid()
             # ctk.CTkLabel(self, image=img, text='').pack(anchor=ctk.CENTER, expand=False, pady=self.pady)
+
+    def make_gear_type_frame(self):
+        self.gear_type_frame = CTkFrame(self)
+        ctk.CTkLabel(self.gear_type_frame, text='Gear Type').grid(sticky='nesw', columnspan=5)
+        value_index = 0
+        for t in AppGlobals.Categories:
+            ctk.CTkRadioButton(self.gear_type_frame,
+                               text=t.name,
+                               variable=self.gear_type_var,
+                               command=self.select_gear_type,
+                               value=value_index).grid(row=1, column=value_index)
+            value_index += 1
+        self.gear_type_var.set(self.gear.category.value-1)
+        self.gear_type_frame.pack(pady=10)
+
+    def make_gear_width_frame(self):
+        self.gear_width_frame = CTkFrame(self)
+        ctk.CTkLabel(self.gear_width_frame, text='Gear Width').grid(sticky='nesw', columnspan=5)
+        value_index = 0
+        for t in AppGlobals.WidthType:
+            ctk.CTkRadioButton(self.gear_width_frame,
+                               text=t.name,
+                               variable=self.gear_width_var,
+                               command=self.select_gear_width,
+                               value=value_index).grid(row=1, column=value_index)
+            value_index += 1
+        self.gear_width_var.set(self.gear.width_type.value-1)
+        self.gear_width_frame.pack(pady=20)
 
     def make_points_frame(self):
         self.points_frame = CTkFrame(self)
@@ -65,7 +102,7 @@ class GearEditor(CTkScrollableFrame):
         r = 1
         for p in self.gear.points:
             ctk.CTkButton(self.points_frame, text='-', width=1,
-                          command=lambda x=p: self.delete_point(p)).grid(row=r, column=0)
+                          command=lambda x=p: self.delete_point(x)).grid(row=r, column=0)
             ctk.CTkLabel(self.points_frame, text=f'{r}').grid(row=r, column=1, ipadx=10, sticky="w")
             ctk.CTkButton(self.points_frame, text=f'{p.type.name}',
                           command=lambda x=p: self.change_inout(x)).grid(row=r, column=2, ipadx=10, sticky="w")
@@ -104,6 +141,14 @@ class GearEditor(CTkScrollableFrame):
             self.settings_widgets.append({'name': name_entry, 'value':value_combo, 'init': init_entry})
             r += 1
 
+    def select_gear_type(self):
+        self.gear.category = AppGlobals.Categories(self.gear_type_var.get()+1)
+        print(self.gear.category)
+
+    def select_gear_width(self):
+        self.gear.width_type = AppGlobals.WidthType(self.gear_width_var.get()+1)
+        print(self.gear.width_type)
+
     def add_new_setting(self):
         self.save_settings()
         self.gear.settings.append({'name': '', 'value': self.gear.get_settings_options_list()[0], 'init': '0'})
@@ -126,8 +171,8 @@ class GearEditor(CTkScrollableFrame):
         self.settings_frame.destroy()
         self.add_range_start = None
         self.add_range_end = None
-        self.make_points_frame()
         self.make_settings_frame()
+        self.make_points_frame()
 
     def select_image(self):
         filename = fd.askopenfilename()

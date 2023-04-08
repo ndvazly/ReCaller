@@ -1,17 +1,5 @@
-from dataclasses import dataclass
-
-import App.StudioSetup
 from App.Point import Point
-from AppGlobals import Socket
-from App import StudioSetup
-from App.GearItem import GearItem
 
-
-# @dataclass
-# class PatchPoint:
-#     point: Point
-#     device: GearItem
-#
 
 class PatchBay:
     def __init__(self, id: int, name: str, number_of_points: int):
@@ -21,6 +9,9 @@ class PatchBay:
         self.points: list[Point] = [None] * self.number_of_points
         # self.devices: list[GearItem] = [None] * self.number_of_points
         # print(self.points)
+
+    def clear(self):
+        self.points: list[Point] = [None] * self.number_of_points
 
     def connect_gear(self, p: Point, device):
         point_index = p.point
